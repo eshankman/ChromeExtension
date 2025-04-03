@@ -5,22 +5,22 @@
 body.popup {
   margin: 0;
   padding: 0;
-  background-color: #FEF9F1;
+  background-color: #fcfbf9;
   box-sizing: border-box;
 }
 
-/* BUBBLE STYLING */
 #pricepal-bubble {
   position: absolute;
   z-index: 9999;
-  background-color: #ffffff;
+  background-color: #fcf0e8;
   padding: 16px 20px;
   border: 1px solid #e0e0e0;
   border-radius: 12px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 14px;
-  max-width: 340px;
+  max-width: 300px;
+  max-height: 300px;
   color: #333;
   overflow-wrap: break-word;
   white-space: normal;
@@ -35,16 +35,38 @@ body.popup {
 
 #pricepal-bubble .pricepal-title {
   font-weight: 600;
-  font-size: 15px;
+  font-size: 18px;
   color: #222;
   margin-bottom: 6px;
 }
 
 #pricepal-bubble .pricepal-price {
-  font-size: 18px;
-  font-weight: bold;
+  font-size: 15px;
+  font-weight: italic;
   color: #27ae60;
+  margin-top: 12px;
   margin-bottom: 12px;
+}
+
+#pricepal-bubble .pricepal-competitor {
+  font-size: 15px;
+  font-weight: bold;
+  color: darkslategray;
+  margin-bottom: 8px;
+}
+
+.pricepal-comps {
+  font-size: 15px;
+  font-weight: italic;
+  margin-bottom: 8px;
+}
+
+.pricepal-comps-bestbuy {
+  color: #0072ce;
+}
+
+.pricepal-comps-amazon {
+  color: #ff9900;
 }
 
 #pricepal-bubble .pricepal-tip {
@@ -57,20 +79,31 @@ body.popup {
 #pricepal-bubble .wishlist-btn {
   font-size: 20px;
   background: none;
-  border: none;
+  display: flex;       
+  /* border: none; */
   cursor: pointer;
   color: #888;
-  margin-top: 10px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1001;
   padding: 4px 0;
   text-align: left;
   transition: color 0.2s ease;
+
+  width: 32px;
+  height: 32px;
+  display: flex;           
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgb(186, 186, 186);
+  border-radius: 50%;
 }
 
 #pricepal-bubble .wishlist-btn:hover {
   color: #e63946;
 }
 
-/* CHART STYLING */
 canvas#price-history-chart {
   margin-top: 12px;
   width: 100%;
@@ -78,12 +111,12 @@ canvas#price-history-chart {
   height: auto;
 }
 
-/* HEADER & LOGO */
 #header {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 5px 0 10px 0;
+  margin-top: -40px;
+  /* margin: 5px 0 10px 0; */
 }
 
 #logo {
@@ -94,7 +127,17 @@ canvas#price-history-chart {
   display: block;
 }
 
-/* WISHLIST BOX */
+#intro {
+  margin-top: -25px;
+}
+
+#demo {
+  border: 1px solid rgb(186, 186, 186);
+  border-radius: 9px;
+  margin-top: 6px;
+  margin-bottom: -6px;
+}
+
 .wishlist-box {
   margin-top: 30px;
   padding: 15px;
@@ -108,7 +151,6 @@ canvas#price-history-chart {
   margin-bottom: 10px;
 }
 
-/* WISHLIST ITEMS */
 #wishlist-items {
   list-style: none;
   padding: 0;
@@ -142,7 +184,6 @@ canvas#price-history-chart {
   font-size: 12px;
 }
 
-/* DELETE BUTTON */
 .delete-btn {
   position: absolute;
   top: 10px;
@@ -158,3 +199,4 @@ canvas#price-history-chart {
 .delete-btn:hover {
   color: #d11a2a;
 }
+

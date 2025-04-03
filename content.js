@@ -53,6 +53,12 @@ function truncateTitle(str, maxLength = 50) {
   return str.slice(0, maxLength) + "...";
 }
 
+// Capitalize first letter
+function capitalizeFirstLetter(site) {
+  const capitalFirstLetter = String(site).charAt(0).toUpperCase() + String(site).slice(1);
+  return capitalFirstLetter;
+}
+
 // Creates the bubble at the given (x, y)
 function showPriceBubble(title, price, x, y, competitorData) {
   // Remove old bubble
@@ -78,7 +84,7 @@ function showPriceBubble(title, price, x, y, competitorData) {
   const priceEl = document.createElement("div");
   priceEl.style.marginTop = "5px";
   priceEl.classList.add("pricepal-price");
-  priceEl.textContent = price ? `💵 Price: ${price}` : "Price: Not found";
+  priceEl.textContent = price ? `This Price: ${price}` : "Price: Not found";
   bubble.appendChild(priceEl);
 
   // Competitors
@@ -87,6 +93,7 @@ function showPriceBubble(title, price, x, y, competitorData) {
     if (comps && Object.keys(comps).length > 0) {
       const cTitle = document.createElement("div");
       cTitle.style.marginTop = "6px";
+      cTitle.classList.add('pricepal-competitor');
       cTitle.textContent = "Competitor Price(s):";
       bubble.appendChild(cTitle);
 
@@ -94,7 +101,11 @@ function showPriceBubble(title, price, x, y, competitorData) {
       for (const site of Object.keys(comps)) {
         const siteLine = document.createElement("div");
         siteLine.style.marginLeft = "8px";
-        siteLine.textContent = `${site.toUpperCase()}: ${comps[site] || "N/A"}`;
+      
+        const siteClass = `pricepal-comps-${site.toLowerCase()}`; // define the class name based on site
+        siteLine.classList.add('pricepal-comps', siteClass);
+      
+        siteLine.textContent = `${capitalizeFirstLetter(site)}: ${comps[site] || "N/A"}`;
         bubble.appendChild(siteLine);
       }
     }
