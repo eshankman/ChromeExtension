@@ -20,7 +20,12 @@ document.addEventListener("mouseover", (e) => {
 function handleHover(e) {
   const { title, price, productUrl } = getProductInfo(e.target); //!last minute fix
   if (title) {
-    console.log("Sending message with title:", title, "from site:", window.location.hostname);
+    console.log(
+      "Sending message with title:",
+      title,
+      "from site:",
+      window.location.hostname
+    );
 
     // 1) Convert "$99.99" → 99.99
     let numericPrice = 0;
@@ -35,7 +40,7 @@ function handleHover(e) {
         action: "PRICE_SEARCH",
         currentSite: window.location.hostname,
         productTitle: title,
-        originalPrice: numericPrice
+        originalPrice: numericPrice,
       },
       (response) => {
         console.log("Got competitor response:", response);
@@ -44,7 +49,6 @@ function handleHover(e) {
     );
   }
 }
-
 
 // To make the title shorter, i.e. max 50 chars
 function truncateTitle(str, maxLength = 50) {
@@ -55,11 +59,12 @@ function truncateTitle(str, maxLength = 50) {
 
 // Capitalize first letter
 function capitalizeFirstLetter(site) {
-  const capitalFirstLetter = String(site).charAt(0).toUpperCase() + String(site).slice(1);
+  const capitalFirstLetter =
+    String(site).charAt(0).toUpperCase() + String(site).slice(1);
   return capitalFirstLetter;
 }
 
-// Creates the bubble at the given (x, y) 
+// Creates the bubble at the given (x, y)
 function showPriceBubble(title, price, x, y, competitorData, productUrl) {
   // Remove old bubble
   const oldBubble = document.getElementById("pricepal-bubble");
@@ -93,7 +98,7 @@ function showPriceBubble(title, price, x, y, competitorData, productUrl) {
     if (comps && Object.keys(comps).length > 0) {
       const cTitle = document.createElement("div");
       cTitle.style.marginTop = "6px";
-      cTitle.classList.add('pricepal-competitor');
+      cTitle.classList.add("pricepal-competitor");
       cTitle.textContent = "Competitor Price(s):";
       bubble.appendChild(cTitle);
 
@@ -101,11 +106,13 @@ function showPriceBubble(title, price, x, y, competitorData, productUrl) {
       for (const site of Object.keys(comps)) {
         const siteLine = document.createElement("div");
         siteLine.style.marginLeft = "8px";
-      
+
         const siteClass = `pricepal-comps-${site.toLowerCase()}`; // define the class name based on site
-        siteLine.classList.add('pricepal-comps', siteClass);
-      
-        siteLine.textContent = `${capitalizeFirstLetter(site)}: ${comps[site] || "N/A"}`;
+        siteLine.classList.add("pricepal-comps", siteClass);
+
+        siteLine.textContent = `${capitalizeFirstLetter(site)}: ${
+          comps[site] || "N/A"
+        }`;
         bubble.appendChild(siteLine);
       }
     }
@@ -114,14 +121,14 @@ function showPriceBubble(title, price, x, y, competitorData, productUrl) {
     errEl.style.color = "red";
     errEl.textContent = `Error: ${competitorData.error}`;
     bubble.appendChild(errEl);
-  } 
+  }
 
   //creation of the heart button for the wishlist
   const heartBtn = document.createElement("button");
   heartBtn.textContent = "🤍";
   heartBtn.classList.add("wishlist-btn");
   heartBtn.title = "Add to Wishlist";
-  
+
   // Check if item is already in wishlist to show red heart
   chrome.storage.local.get(["wishlist"], (res) => {
     const wishlist = res.wishlist || {};
@@ -129,16 +136,16 @@ function showPriceBubble(title, price, x, y, competitorData, productUrl) {
     if (wishlist[key]) {
       heartBtn.textContent = "❤️";
       console.log("📦 Wishlist loaded:", wishlist);
-
     }
   });
-  
+
+  const wishlistSound = new Audio(chrome.runtime.getURL("added.mp3"));
   // Handle click
   heartBtn.addEventListener("click", () => {
     chrome.storage.local.get(["wishlist"], (res) => {
       const wishlist = res.wishlist || {};
       const key = normalizeTitle(title);
-  
+
       // Toggle behavior: if already saved, remove it; otherwise, add it
       if (wishlist[key]) {
         delete wishlist[key];
@@ -149,17 +156,20 @@ function showPriceBubble(title, price, x, y, competitorData, productUrl) {
           price,
           site: window.location.hostname,
           date: new Date().toISOString(),
-          url: productUrl ||window.location.href //!last minute fix
+          url: productUrl || window.location.href, //!last minute fix
         };
         heartBtn.textContent = "❤️";
+
+        wishlistSound.currentTime = 0;
+        wishlistSound.play().catch(err => console.error("🔇 Audio play error:", err));
       }
-  
+
       chrome.storage.local.set({ wishlist }, () => {
         console.log("📦 Wishlist updated");
       });
     });
   });
-  
+
   bubble.appendChild(heartBtn);
 
   // Quick tip line
@@ -177,6 +187,7 @@ function getProductInfo(element) {
   const hostname = window.location.hostname;
   let title = null;
   let price = null;
+  let productUrl = null;
 
   // AMAZON
   if (hostname.includes("amazon.com")) {
@@ -196,6 +207,12 @@ function getProductInfo(element) {
           priceWhole.innerText.trim().replace(/[^\d]/g, "") +
           "." +
           priceFraction.innerText.trim().replace(/[^\d]/g, "");
+      }
+      const anchor = productCard.querySelector("h2 a");
+      if (anchor && anchor.href) {
+        productUrl = anchor.href.startsWith("http")
+          ? anchor.href
+          : `https://www.amazon.com${anchor.getAttribute("href")}`;
       }
     }
 
@@ -228,10 +245,14 @@ function getProductInfo(element) {
       if (priceElement) {
         price = priceElement.innerText.trim();
       }
+      const anchor = productCard.querySelector("a");
+      if (anchor && anchor.href) {
+        productUrl = anchor.href;
+      }
     }
   }
 
-  return { title, price };
+  return { title, price, productUrl };
 }
 
 function getAmazonTitle(productCard) {

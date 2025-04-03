@@ -16,7 +16,7 @@
   "content_scripts": [
     {
       "matches": ["*://*.amazon.com/*", "*://*.bestbuy.com/*"],
-      "js": ["content.js"],
+      "js": ["content2.js"],
       "css": ["style.css"]
     }
   ],
@@ -34,7 +34,7 @@
   },
   "web_accessible_resources": [
     {
-      "resources": ["popup.js"],
+      "resources": ["popup.js", "added.mp3"],
       "matches": ["<all_urls>"]
     }
   ]
