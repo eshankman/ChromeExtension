@@ -14,7 +14,6 @@
   transition: all 0.2s ease;
 }
 
-/* Only apply popup styles inside popup */
 body.popup {
   background-color: grey;
   color: white;

@@ -15,7 +15,13 @@
       "css": ["style.css"]
     }
   ],
-  "icons": {
-    "128": "pricepal2.png"
+  "action": {
+    "default_popup": "pricepal.html",
+    "default_icon": {
+      "128": "pricepal2.png"
+    },
+    "icons": {
+      "128": "pricepal2.png"
+    }
   }
 }
