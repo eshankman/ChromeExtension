@@ -9,7 +9,11 @@
     {
       "matches": [
         "*://www.amazon.com/*",
-        "*://www.walmart.com/*"
+        "*://amazon.com/*",
+        "*://www.walmart.com/*",
+        "*://walmart.com/*",
+        "*://www.bestbuy.com/*",
+        "*://bestbuy.com/*"
       ],
       "js": ["content.js"],
       "css": ["style.css"]

@@ -99,7 +99,23 @@ function getProductInfo(element) {
       title = titleElement ? titleElement.innerText.trim() : null;
       price = priceElement ? priceElement.innerText.trim() : null;
     }
+
+    // BEST BUY
+  } else if (hostname.includes("bestbuy.com")) {
+    const productCard = element.closest(".span.value, .sku-item, .product-list-item");
+    if (productCard) {
+      // Title
+      title = getBestBuyTitle(productCard);
+  
+      // Price
+      let priceElement = productCard.querySelector("[data-testid='medium-customer-price'], .customer-price, .priceView-hero-price span");
+      if (priceElement) {
+        price = priceElement.innerText.trim();
+      }
+    }
   }
+
+  
 
   return { title, price };
 }
@@ -138,5 +154,29 @@ function getAmazonTitle(productCard) {
   }
 
   // 4) final fallback
+  return null;
+}
+
+
+function getBestBuyTitle(productCard) {
+  // 1) Look for <h2 class="product-title">
+  const h2TitleEl = productCard.querySelector("h2.product-title");
+  if (h2TitleEl && h2TitleEl.innerText.trim()) {
+    return h2TitleEl.innerText.trim();
+  }
+
+  // 2) fallback: maybe <h4 class="sku-header"> used on older pages
+  const h4Header = productCard.querySelector("h4.sku-header");
+  if (h4Header && h4Header.innerText.trim()) {
+    return h4Header.innerText.trim();
+  }
+
+  // 3) fallback: maybe there's a <div class="sku-title"> or .product-title a
+  const altTitleEl = productCard.querySelector(".sku-title, .product-title a");
+  if (altTitleEl && altTitleEl.innerText.trim()) {
+    return altTitleEl.innerText.trim();
+  }
+
+  // 4) final fallback: just return null if nothing is found
   return null;
 }
