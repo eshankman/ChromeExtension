@@ -2,20 +2,23 @@
   "manifest_version": 3,
   "name": "PricePal",
   "version": "0.1",
-  "description": "Hover to compare product prices across Amazon and Walmart.",
+  "description": "Naive cross-site comparison for Amazon & Best Buy search pages.",
   "permissions": ["scripting", "activeTab"],
-  "host_permissions": ["<all_urls>"],
+  "host_permissions": [
+    "*://*.amazon.com/*",
+    "*://*.bestbuy.com/*",
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
   "content_scripts": [
     {
       "matches": [
-        "*://www.amazon.com/*",
-        "*://amazon.com/*",
-        "*://www.walmart.com/*",
-        "*://walmart.com/*",
-        "*://www.bestbuy.com/*",
-        "*://bestbuy.com/*"
+        "*://*.amazon.com/*",
+        "*://*.bestbuy.com/*"
       ],
-      "js": ["content.js"],
+      "js": ["content3.js"],
       "css": ["style.css"]
     }
   ],
@@ -23,9 +26,9 @@
     "default_popup": "pricepal.html",
     "default_icon": {
       "128": "pricepal2.png"
-    },
-    "icons": {
-      "128": "pricepal2.png"
     }
+  },
+  "icons": {
+    "128": "pricepal2.png"
   }
 }

@@ -1,0 +1,45 @@
+{
+    "manifest_version": 3,
+    "name": "PricePal",
+    "version": "0.1",
+    "description": "Hover to compare product prices across Amazon, Walmart, and Best Buy.",
+    
+    "permissions": [
+      "scripting",
+      "activeTab"
+    ],
+  
+    "host_permissions": [
+      "*://www.amazon.com/*",
+      "*://www.walmart.com/*",
+      "*://www.bestbuy.com/*",
+      "<all_urls>"
+    ],
+  
+    "background": {
+      "service_worker": "background.js"
+    },
+  
+    "content_scripts": [
+      {
+        "matches": [
+          "*://*.amazon.com/*",
+          "*://*.bestbuy.com/*",
+          "*://*.walmart.com/*"
+        ],
+        "js": ["content3.js"],
+        "css": ["style.css"]
+      }
+    ],
+  
+    "action": {
+      "default_popup": "pricepal.html",
+      "default_icon": {
+        "128": "pricepal2.png"
+      },
+      "icons": {
+        "128": "pricepal2.png"
+      }
+    }
+  }
+  
