@@ -1,88 +1,67 @@
-
-
-/* #pricepal-bubble {
-  position: absolute;
-  z-index: 99999;
-  background-color: #fff;
-  color: #111;
-  font-size: 14px;
-  padding: 10px;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  width: 200px;
-  pointer-events: none;
-  transition: all 0.2s ease;
-} */
-
 #pricepal-bubble {
   position: absolute;
-  background-color: #fff;
-  padding: 10px 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   z-index: 9999;
-  font-family: Arial, sans-serif;
+  background-color: #fff;
+  padding: 15px 18px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 14px;
-  /* height: 200px; */
-  max-width: 300px;
-  overflow-wrap: break-word; 
-  white-space: normal; 
+  max-width: 320px;
+  overflow-wrap: break-word;
+  white-space: normal;
+  transition: all 0.3s ease-in-out;
+  pointer-events: auto;
+}
+
+#pricepal-bubble:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  transform: translateY(-5px);
 }
 
 #pricepal-bubble .pricepal-title {
   font-weight: bold;
-  margin-bottom: 6px;
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 8px;
 }
 
 #pricepal-bubble .pricepal-price {
-  margin-bottom: 6px;
-}
-
-#pricepal-bubble .pricepal-tip {
-  margin-top: 6px;
-  color: #666; 
-}
-
-body.popup {
-  background-color: grey;
-  color: white;
-  width: 600px;
-  height: 400px; 
-}
-
-.popup {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.text-box{
-  border-radius: 9px;
-}
-
- #welcome {
-    text-align: center;
-    align-items: center;
-    text-decoration: bold;
-    text-decoration: italic;
-    color: white;
-  }
-
-.steps {
+  font-size: 18px;
+  color: #27ae60;
+  font-weight: bold;
   margin-bottom: 10px;
 }
 
-.demoImg {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
+#pricepal-bubble .pricepal-tip {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #7f8c8d;
+  font-style: italic;
 }
 
-.demoImg img {
-  max-width: 90%;
+#pricepal-bubble .wishlist-btn {
+  display: block;
+  font-size: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #888;
+  margin: 10px 0;
+  padding: 4px 0;
+  text-align: left;
+  transition: color 0.2s ease;
+}
+
+#pricepal-bubble .wishlist-btn:hover {
+  color: red;
+}
+
+
+canvas#price-history-chart {
+  margin-top: 10px;
+  width: 100%;
+  max-width: 300px;
   height: auto;
-  border-radius: 10px;
 }

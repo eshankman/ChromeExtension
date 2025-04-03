@@ -54,6 +54,32 @@ function showPriceBubble(title, price, x, y) {
   priceEl.textContent = price ? `💵 Price: ${price}` : "Price: Not found";
   bubble.appendChild(priceEl);
 
+  const heartBtn = document.createElement("button");
+  heartBtn.textContent = "🤍";
+  heartBtn.classList.add("wishlist-btn");
+  heartBtn.title = "Add to Wishlist";
+  bubble.appendChild(heartBtn);
+  console.log("✅ Created heart button");
+
+
+  heartBtn.addEventListener("click", () => {
+    chrome.storage.local.get(["wishlist"], (res) => {
+      const wishlist = res.wishlist || {};
+      const key = normalizeTitle(title);
+      wishlist[key] = {
+        title,
+        price,
+        site,
+        date: new Date().toISOString()
+      };
+      chrome.storage.local.set({ wishlist }, () => {
+        heartBtn.textContent = "❤️";
+        console.log("❤️ Heart button added:", heartBtn);
+
+      });
+    });
+  });
+
   // Quick tip line
   const tipEl = document.createElement("div");
   tipEl.classList.add("pricepal-tip");

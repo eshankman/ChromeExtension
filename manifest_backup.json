@@ -35,10 +35,12 @@
     "action": {
       "default_popup": "pricepal.html",
       "default_icon": {
-        "128": "pricepal2.png"
+        "16": "thumb",
+        "128": "thumbup.png"
       },
       "icons": {
-        "128": "pricepal2.png"
+        "16": "thumb.png",
+        "128": "thumbup.png"
       }
     }
   }
