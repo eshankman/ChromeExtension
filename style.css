@@ -1,0 +1,36 @@
+
+
+#pricepal-bubble {
+  position: absolute;
+  z-index: 99999;
+  background-color: #fff;
+  color: #111;
+  font-size: 14px;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  width: 200px;
+  pointer-events: none;
+  transition: all 0.2s ease;
+}
+
+/* Only apply popup styles inside popup */
+body.popup {
+  background-color: grey;
+  color: white;
+  width: 400px;
+  height: 400px; 
+}
+
+.text-box{
+  border-radius: 9px;
+}
+
+ #welcome {
+    text-align: center;
+    align-items: center;
+    text-decoration: bold;
+    text-decoration: italic;
+    color: white;
+  }
+
