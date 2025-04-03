@@ -1,6 +1,6 @@
 
 
-#pricepal-bubble {
+/* #pricepal-bubble {
   position: absolute;
   z-index: 99999;
   background-color: #fff;
@@ -12,13 +12,50 @@
   width: 200px;
   pointer-events: none;
   transition: all 0.2s ease;
+} */
+
+#pricepal-bubble {
+  position: absolute;
+  background-color: #fff;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  /* height: 200px; */
+  max-width: 300px;
+  overflow-wrap: break-word; 
+  white-space: normal; 
+}
+
+#pricepal-bubble .pricepal-title {
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+#pricepal-bubble .pricepal-price {
+  margin-bottom: 6px;
+}
+
+#pricepal-bubble .pricepal-tip {
+  margin-top: 6px;
+  color: #666; 
 }
 
 body.popup {
   background-color: grey;
   color: white;
-  width: 400px;
+  width: 600px;
   height: 400px; 
+}
+
+.popup {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .text-box{
@@ -33,3 +70,19 @@ body.popup {
     color: white;
   }
 
+.steps {
+  margin-bottom: 10px;
+}
+
+.demoImg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.demoImg img {
+  max-width: 90%;
+  height: auto;
+  border-radius: 10px;
+}
