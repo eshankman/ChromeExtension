@@ -1,14 +1,27 @@
+.text-box {
+  padding: 20px;
+}
+
+body.popup {
+  margin: 0;
+  padding: 0;
+  background-color: #FEF9F1;
+  box-sizing: border-box;
+}
+
+/* BUBBLE STYLING */
 #pricepal-bubble {
   position: absolute;
   z-index: 9999;
-  background-color: #fff;
-  padding: 15px 18px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  padding: 16px 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 14px;
-  max-width: 320px;
+  max-width: 340px;
+  color: #333;
   overflow-wrap: break-word;
   white-space: normal;
   transition: all 0.3s ease-in-out;
@@ -16,71 +29,132 @@
 }
 
 #pricepal-bubble:hover {
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
+  transform: translateY(-4px);
 }
 
 #pricepal-bubble .pricepal-title {
-  font-weight: bold;
-  font-size: 16px;
-  color: #333;
-  margin-bottom: 8px;
+  font-weight: 600;
+  font-size: 15px;
+  color: #222;
+  margin-bottom: 6px;
 }
 
 #pricepal-bubble .pricepal-price {
   font-size: 18px;
-  color: #27ae60;
   font-weight: bold;
-  margin-bottom: 10px;
+  color: #27ae60;
+  margin-bottom: 12px;
 }
 
 #pricepal-bubble .pricepal-tip {
-  margin-top: 8px;
-  font-size: 12px;
-  color: #7f8c8d;
+  font-size: 13px;
+  color: #555;
   font-style: italic;
+  margin-bottom: 6px;
 }
 
 #pricepal-bubble .wishlist-btn {
-  display: block;
   font-size: 20px;
   background: none;
   border: none;
   cursor: pointer;
   color: #888;
-  margin: 10px 0;
+  margin-top: 10px;
   padding: 4px 0;
   text-align: left;
   transition: color 0.2s ease;
 }
 
 #pricepal-bubble .wishlist-btn:hover {
-  color: red;
+  color: #e63946;
 }
 
-
+/* CHART STYLING */
 canvas#price-history-chart {
-  margin-top: 10px;
+  margin-top: 12px;
   width: 100%;
   max-width: 300px;
   height: auto;
 }
+
+/* HEADER & LOGO */
 #header {
   display: flex;
-  align-items: center;
   justify-content: center;
-  text-align: center;
-  margin-bottom: 15px;
-  gap: 10px; 
-}
-
-#welcome {
-  font-size: 24px; 
-  margin: 0;
+  align-items: center;
+  margin: 5px 0 10px 0;
 }
 
 #logo {
-  width: 24px;
-  height: 24px;
+  width: 128px;
+  height: 128px;
   object-fit: contain;
+  margin: 0 auto;
+  display: block;
+}
+
+/* WISHLIST BOX */
+.wishlist-box {
+  margin-top: 30px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.wishlist-box h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+/* WISHLIST ITEMS */
+#wishlist-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#wishlist-items li {
+  position: relative;
+  padding: 10px;
+  padding-right: 30px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid #eee;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+#wishlist-items a,
+.wishlist-link {
+  color: #2c3e50;
+  text-decoration: underline;
+  font-weight: normal;
+}
+
+#wishlist-items a:hover,
+.wishlist-link:hover {
+  color: #1a73e8;
+}
+
+#wishlist-items span {
+  color: #888;
+  font-size: 12px;
+}
+
+/* DELETE BUTTON */
+.delete-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: #999;
+  cursor: pointer;
+  font-size: 16px;
+  transition: color 0.2s ease;
+}
+
+.delete-btn:hover {
+  color: #d11a2a;
 }

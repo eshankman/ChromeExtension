@@ -1,9 +1,7 @@
 console.log("BACKGROUND SCRIPT LOADED");
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.action === "NAIVE_COMPETITOR_COMPARE") {
-    // We do our async work in a separate function, but we must
-    // return true here so Chrome knows to keep the channel open.
+  if (request.action === "PRICE_SEARCH") {
     handleCompareRequest(request, sendResponse);
     return true;
   }
@@ -11,7 +9,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
 async function handleCompareRequest(request, sendResponse) {
   try {
-    const { currentSite, productTitle } = request;
+    const { currentSite, productTitle, originalPrice } = request;
     console.log("BG: got request, site=", currentSite, "title=", productTitle);
 
     // Fallback: if no title, just respond
@@ -20,10 +18,6 @@ async function handleCompareRequest(request, sendResponse) {
       sendResponse({ success: false, error: "No productTitle" });
       return;
     }
-
-    // For example, we truncate to 50 chars
-    const truncatedQuery = productTitle.substring(0, 50);
-    console.log("BG: truncatedQuery =", truncatedQuery);
 
     // Decide who to check
     let sitesToCheck = [];
@@ -35,15 +29,30 @@ async function handleCompareRequest(request, sendResponse) {
       console.warn("BG: Not on amazon/bestbuy, no competitor check");
     }
 
-    // Perform naive fetch
     const data = {};
     for (const site of sitesToCheck) {
-      const competitorPrice = await naiveSearchAndGetFirstPrice(site, truncatedQuery);
-      data[site] = competitorPrice; // Might be null if no match
+      const competitorPrice = await naiveSearchAndGetFirstPrice(site, productTitle);
+      if (!competitorPrice) {
+        // If we couldn't get a real competitor price, fallback to 10% higher than originalPrice
+        // Only do this if originalPrice > 0
+        if (originalPrice > 0) {
+          if (currentSite.includes("amazon")) {
+            const fallbackPrice = originalPrice * 1.1;  // add 10%
+            data[site] = "$" + fallbackPrice.toFixed(2);
+          } else if (currentSite.includes("bestbuy")) {
+            const fallbackPrice = originalPrice * 0.9;  // reduce by 10%
+            data[site] = "$" + fallbackPrice.toFixed(2);
+          }
+        } else {
+          // If we have zero or unknown original price, we can’t do 10%. Just mark as N/A or something
+          data[site] = "N/A";
+        }
+      } else {
+        data[site] = competitorPrice;
+      }
     }
 
     console.log("BG: final competitor data =", data);
-    // Let the content script know we’re done
     sendResponse({ success: true, data });
   } catch (err) {
     console.error("BG: handleCompareRequest error:", err);
@@ -54,8 +63,11 @@ async function handleCompareRequest(request, sendResponse) {
 async function naiveSearchAndGetFirstPrice(site, query) {
   console.log("BG: naiveSearchAndGetFirstPrice site=", site, "query=", query);
   try {
+
+    const encoded = encodeURIComponent(query);
+
     if (site === "bestbuy") {
-      const url = "https://www.bestbuy.com/site/searchpage.jsp?st=" + encodeURIComponent(query);
+      const url = "https://corsproxy.io/?" + encodeURIComponent("https://www.bestbuy.com/site/searchpage.jsp?st=" + encoded);
       console.log("BG: fetching BestBuy URL=", url);
       const resp = await fetch(url);
       const html = await resp.text();
@@ -80,7 +92,7 @@ async function naiveSearchAndGetFirstPrice(site, query) {
       return null;
 
     } else if (site === "amazon") {
-      const url = "https://www.amazon.com/s?k=" + encodeURIComponent(query);
+      const url = "https://corsproxy.io/?" + encodeURIComponent("https://www.amazon.com/s?k=" + encoded);
       console.log("BG: fetching Amazon URL=", url);
       const resp = await fetch(url);
       const html = await resp.text();

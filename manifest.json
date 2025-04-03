@@ -1,9 +1,10 @@
 {
   "manifest_version": 3,
   "name": "PricePal",
-  "version": "0.1",
+  "version": "1.1",
   "description": "Naive cross-site comparison for Amazon & Best Buy search pages.",
-  "permissions": ["scripting", "activeTab"],
+  "permissions": ["storage", "scripting", "activeTab", "tabs"],
+
   "host_permissions": [
     "*://*.amazon.com/*",
     "*://*.bestbuy.com/*",
@@ -14,24 +15,27 @@
   },
   "content_scripts": [
     {
-      "matches": [
-        "*://*.amazon.com/*",
-        "*://*.bestbuy.com/*"
-      ],
-      "js": ["content3.js"],
+      "matches": ["*://*.amazon.com/*", "*://*.bestbuy.com/*"],
+      "js": ["content.js"],
       "css": ["style.css"]
     }
   ],
   "action": {
     "default_popup": "pricepal.html",
     "default_icon": {
-    "48": "pricepal48.png",
-    "128": "pricepal128.png"
+      "48": "pricepal48.png",
+      "128": "pricepal128.png"
     }
   },
   "icons": {
     "16": "pricepal16.png",
     "48": "pricepal48.png",
     "128": "pricepal128.png"
-  }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["popup.js"],
+      "matches": ["<all_urls>"]
+    }
+  ]
 }
